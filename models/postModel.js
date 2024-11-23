@@ -8,7 +8,10 @@ const postSchema=new mongoose.Schema({
     },
     postDesc:{
         type:"String",
-        default:""
+        
+    },
+    tripDestination:{
+        type:String
     },
     postLike:[{
         type:mongoose.Schema.Types.ObjectId,
@@ -21,6 +24,8 @@ const postSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"TripModel"
     }
+},{
+    timestamps:true
 })
 
 const postModel=mongoose.model("PostModel",postSchema)

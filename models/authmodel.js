@@ -2,13 +2,20 @@ const mongoose=require("mongoose")
 
 const authSchema=new mongoose.Schema({
     userName:{
-        type:String
+        type:String,
+        trim: true,
     },
     email:{
-        type:String
+        type:String,
+        
     },
     password:{
-        type:String
+        type:String,
+    },
+    role: {
+        type: String,
+        // enum: ["user", "admin"],  Define roles for authorization
+        default: "user",
     },
     gender:{
         type:String
@@ -25,6 +32,8 @@ const authSchema=new mongoose.Schema({
             ref:"TripModel"
         }
     ],
+},{
+    timestamps:true
 })
 
 const authModel=mongoose.model("AuthModel",authSchema)
