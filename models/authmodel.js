@@ -13,6 +13,9 @@ const authSchema=new mongoose.Schema({
         type:String,
         
     },
+    dob:{
+        type:Date
+    },
     role: {
         type: String,
         // enum: ["user", "admin"],  Define roles for authorization

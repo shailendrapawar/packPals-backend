@@ -6,20 +6,24 @@ const dbConnect=require("./configs/DBconfig")
 
 const cors=require("cors")
 
+
+// root level routing ================================
 const authRoutes=require("./routes/authRoutes")
-const userRoutes=require("./routes/userRoutes");
-
-
+const tripRoutes=require("./routes/tripRoutes")
+const postRoutes=require("./routes/postRoutes")
 
 
 // environmental variables====================================
 const port=process.env.PORT||5000;
 
 
-//  root-level middlewares================= 
+//  root-level middlewares=============================
 app.use(cors())
-app.use(authRoutes)
-app.use(userRoutes)
+app.use(express.json())
+app.use("/auth",authRoutes)
+app.use("/trip",tripRoutes)
+app.use("/post",postRoutes)
+
 
 
 app.listen(port,()=>{
