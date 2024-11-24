@@ -33,7 +33,7 @@ const authSchema=new mongoose.Schema({
     trips:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"TripModel"
+            ref:"PostModel"
         }
     ],
 },{

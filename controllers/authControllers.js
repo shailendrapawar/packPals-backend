@@ -120,7 +120,7 @@ class AuthController {
     static getUser = async (req, res) => {
         const { userId } = req.params
         
-        const isUser = await AuthModel.findById({ _id:userId }).select("-password");
+        const isUser = await AuthModel.findById({ _id:userId }).populate({path:"PostModel",strictPopulate: false })
         if (isUser) {
             res.json({
                 msg: "user exists",

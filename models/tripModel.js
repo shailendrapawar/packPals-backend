@@ -30,7 +30,6 @@ const tripSchema=new mongoose.Schema({
     tripEnd:{
         type:Date
     }
-
 })
 
 const tripModel=mongoose.model("TripModel",tripSchema);
