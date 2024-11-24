@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt")
 
 class AuthController {
 
-    // for login =======================================
+
+    //==============for login =======================================
     static login = async (req, res) => {
         const { email, password } = req.body;
         const isUser = await AuthModel.findOne({ email: email })
@@ -32,7 +33,8 @@ class AuthController {
     }
 
 
-    // for registeration================================
+
+    //============= for registeration================================
     static register = async (req, res) => {
         const { name, email, number, password, gender, dob } = req.body;
 
@@ -66,9 +68,9 @@ class AuthController {
 
 
 
-    // for changing the password -========================================
-    static changePassword = async (req, res) => {
 
+    //==========for changing the password -========================================
+    static changePassword = async (req, res) => {
         const { email, newPassword, oldPassword } = req.body;
         const isUser = await AuthModel.findOne({ email: email })
 
@@ -77,62 +79,61 @@ class AuthController {
             const isMatch = await bcrypt.compare(oldPassword, storedPassword);
 
             if (isMatch) {
-                const salt=await bcrypt.genSalt(10);
-                const newHashPass=await bcrypt.hashSync(newPassword,salt)
+                const salt = await bcrypt.genSalt(10);
+                const newHashPass = await bcrypt.hashSync(newPassword, salt)
 
                 // saving in DB
-                const isSaved=await AuthModel.findOneAndUpdate({email:email},{
-                    $set:{password:newHashPass}
+                const isSaved = await AuthModel.findOneAndUpdate({ email: email }, {
+                    $set: { password: newHashPass }
                 })
 
-                if(isSaved){
+                if (isSaved) {
                     res.json({
-                        msg:"password changed",
-                        status:200
+                        msg: "password changed",
+                        status: 200
                     })
-                }else{
+                } else {
                     res.json({
-                        msg:"password not changed",
-                        status:400
+                        msg: "password not changed",
+                        status: 400
                     })
                 }
-
             } else {
                 res.json({
                     msg: "wrong credentials",
                     status: 400
                 })
             }
-
-
-
-
-
-        }else{
+        } else {
             res.json({
                 msg: "user dosent exist",
                 status: 400
             })
         }
 
-
-
-
-
-
-
-
     }
 
 
 
+    // =======for getting user info========================
 
-
-
-
-
-
-
+    static getUser = async (req, res) => {
+        const { userId } = req.params
+        
+        const isUser = await AuthModel.findById({ _id:userId }).select("-password");
+        if (isUser) {
+            res.json({
+                msg: "user exists",
+                status: 200,
+                user: isUser
+            })
+        } else {
+            res.json({
+                msg: "user dosent exist",
+                status: 400
+            })
+        }
+    }
 
 }
 
